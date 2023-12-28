@@ -9,10 +9,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "cypress": "^3.6.0"
-  },
   "dependencies": {
+    "cypress": "^3.6.0",
     "cypress-xpath": "^2.0.1"
   }
 }
