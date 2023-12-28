@@ -9,8 +9,8 @@ describe('Work with alerts', () => {
         cy.reload()
     })
 
-    it ('Alert', () => {
-        cy.get('#alert').click()
+    it.only ('Alert', () => {
+        /* cy.get('#alert').click()
 
         // Alert é um evento gerenciado pelo Window.
         // O comando cy.on pega eventos que ocorrem na tela.
@@ -19,7 +19,9 @@ describe('Work with alerts', () => {
         cy.on('window:alert', msg => {
             console.log(msg)
             expect(msg).to.be.equal('Alert Simples')
-        })
+        }) */
+
+        cy.clickAlert('#alert', 'Alert Simples')
     })
 
     it ('Alert com mock', () => {
@@ -78,7 +80,7 @@ describe('Work with alerts', () => {
         cy.get('#prompt').click()
     })
 
-    it.only ('Desafio', () => {  
+    it ('Desafio', () => {  
         const stub = cy.stub().as('alerta')
 
         cy.on('window:alert', stub)
