@@ -1,25 +1,35 @@
 /// <reference types="cypress" />
 
 describe('Should test at a functional level', () => {
+    let token
+    
     before(() => {
-        // cy.login('rafael@email.com', 'rafael123')
+        cy.getToken('rafael@email.com', 'rafael123')
+            .then(tkn => {
+                token = tkn
+            })
     })
 
     beforeEach(() => {
-        // cy.get(loc.MENU.HOME).click()
-        // cy.resetApp()
+        cy.resetRest(token)
     })
 
     it('Should create an account', () => {
         cy.request({
+            url: '/contas',
             method: 'POST',
-            url: 'https://barrigarest.wcaquino.me/signin',
+            headers: { Authorization: `JWT ${token}` },
             body: {
-                email: 'rafael@email.com',
-                redirecionar: false,
-                senha: 'rafael123'
+                nome: 'Conta via rest'
             }
-        }).its('body.token').should('not.be.empty')
+        }).as('response')
+        
+        cy.get('@response').then(res => {
+            expect(res.status).to.be.equal(201)
+            expect(res.body).to.have.property('id')
+            expect(res.body).to.have.property('nome', 'Conta via rest')
+        })
+ 
     })
 
     it('Should update an account', () => {
